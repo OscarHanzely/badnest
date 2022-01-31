@@ -32,6 +32,8 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 def setup(hass, config):
+    user_id = ''
+    access_token = ''
     """Set up the badnest component."""
     if config.get(DOMAIN) is not None:
         user_id = config[DOMAIN].get(CONF_USER_ID)
