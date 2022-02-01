@@ -178,5 +178,7 @@ class NestProtectBinarySensor(BinarySensorEntity):
             value = BinarySensorDeviceClass.POWER.value
         if self._sensor_type == "health":
             value = BinarySensorDeviceClass.PROBLEM.value
+        if self._sensor_type == "device":
+            value = BinarySensorDeviceClass.CONNECTIVITY.value
 
         return value

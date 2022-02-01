@@ -1,9 +1,11 @@
 # badnest
 
-A bad Nest integration. This is a second revival of the project for my personal HA instance. My fork is from https://github.com/therealryanbonham/badnest,  that uses the web api. The name comes from the original author.
+A bad Nest integration. This is a second revival of the project for my personal HA instance. My fork is from [therealryanbonham](https://github.com/therealryanbonham/badnest), although original project was created and now deleted by [USA-RedDragon](https://github.com/USA-RedDragon). The name comes from the original author.
 
 ## What changed in fork ?
-I only own Nest protect, so that's the device that I maintain and refactored. I refactored some sensors and added bunch of binary sensors states like motion detection, house occupancy, health status and included attributes like replacement and manufacturing dates, serial number etc.
+I only own Nest protect, so that's the device that I refactored and maintain atm 
+- added bunch of binary sensors like motion detection, house occupancy, health status
+- included attributes (replacement and manufacturing dates, serial number etc.)
 <br><br>
 - - -
 (Original readme follows)
@@ -25,13 +27,16 @@ This isn't an advertised or public API, it's still better than web scraping, but
 
 - Nest could change their webapp api at any time, making this defunct (this has happened before)
 
+## Install
+The easiest way to install the Badnest integration is with [HACS](https://hacs.xyz/). First install HACS if you don’t have it yet. After installation, you can find this integration in the HACS store under integrations.
+
+Alternatively, you can install it manually. Just copy and paste the content of the badnest/custom_components folder in your config/custom_components directory. As example, you will get the sensor.py file in the following path: /config/custom_components/badnest/sensor.py. The disadvantage of a manual installation is that updates are manual as well.
+
 ## Configuration
 
 The camera's region is one of `us` or `eu` depending on your region.
 If you're not in the US or EU, you should be able to add your
 two-character country code, and it should work.
-
-
 
 ### Example configuration.yaml - When you are using the Google Auth Login
 
@@ -63,7 +68,7 @@ The values of `"issue_token"` and `"cookie"` are specific to your Google Account
 7. In the Headers tab, under General, copy the entire `Request URL` (beginning with `https://accounts.google.com`, ending with `nest.com`). This is your `"issue_token"` in `configuration.yaml`.
 8. In the 'Filter' box, enter `oauth2/iframe`
 9. Several network calls will appear in the Dev Tools window. Click on the last `iframe` call.
-10. In the Headers tab, under Request Headers, copy the entire `cookie` (beginning `OCAK=...` - **include the whole string which is several lines long and has many field/value pairs** - do not include the `cookie:` name). This is your `"cookie"` in `configuration.yaml`.
+10. In the Headers tab, under Request Headers, copy the entire `cookie` (beginning `OCAK=...` or `__Host-GAPS=` - **include the whole string which is several lines long and has many field/value pairs** - do not include the `cookie:` name). This is your `"cookie"` in `configuration.yaml`.
 
 ## Notes
 
