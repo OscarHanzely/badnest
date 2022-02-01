@@ -1,30 +1,37 @@
 import logging
 
 from homeassistant.helpers.entity import Entity
+from homeassistant.components.sensor import SensorDeviceClass
 
-from .const import DOMAIN
+from .const import (
+    DOMAIN,
+    SENSOR_CO_STATUS,
+    SENSOR_SMOKE_STATUS,
+    SENSOR_BATTERY_HEALTH,
+    SENSOR_BATTERY_LEVEL,
+    SENSOR_TEMPERATURE,
+)
 
 from homeassistant.const import (
     ATTR_BATTERY_LEVEL,
-    DEVICE_CLASS_TEMPERATURE,
-    DEVICE_CLASS_CO,
-    DEVICE_CLASS_BATTERY,
     TEMP_CELSIUS
 )
 
 _LOGGER = logging.getLogger(__name__)
 
 PROTECT_SENSOR_TYPES = [
-    "co_status",
-    "smoke_status",
-    "battery_health_state",
-    "battery_level",
-    "auto_away",
-    "line_power_present",
-    "home_away_input",
-    "health",
+    SENSOR_CO_STATUS,
+    SENSOR_SMOKE_STATUS,
+    SENSOR_BATTERY_HEALTH,
+    SENSOR_BATTERY_LEVEL,
 ]
 
+friendly_names = {
+    SENSOR_CO_STATUS : "CO Level",
+    SENSOR_SMOKE_STATUS : "Smoke Level",
+    SENSOR_BATTERY_HEALTH : "Battery Health",
+    SENSOR_BATTERY_LEVEL : "Battery Level",
+}
 
 async def async_setup_platform(hass,
                                config,
@@ -74,12 +81,12 @@ class NestTemperatureSensor(Entity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        return self.device.device_data[self.device_id]['temperature']
+        return self.device.device_data[self.device_id][SENSOR_TEMPERATURE]
 
     @property
     def device_class(self):
         """Return the device class of this entity."""
-        return DEVICE_CLASS_TEMPERATURE
+        return SensorDeviceClass.TEMPERATURE.value
 
     @property
     def unit_of_measurement(self):
@@ -95,7 +102,7 @@ class NestTemperatureSensor(Entity):
         """Return the state attributes."""
         return {
             ATTR_BATTERY_LEVEL:
-                self.device.device_data[self.device_id]['battery_level']
+                self.device.device_data[self.device_id][SENSOR_BATTERY_LEVEL]
         }
 
 
@@ -108,22 +115,6 @@ class NestProtectSensor(Entity):
         self.device_id = device_id
         self._sensor_type = sensor_type
         self.device = api
-        if sensor_type == 'health':
-            self._attr_extra_state_attributes = {
-                "component_wifi_test_passed": None,
-                "component_co_test_passed": None,
-                "component_smoke_test_passed": None,
-                "component_speaker_test_passed": None,
-                "component_led_test_passed": None,
-                "last_audio_self_test_end_utc_secs": None,
-                "device_born_on_date_utc_secs": None,
-                "replace_by_date_utc_secs": None,
-                "serial_number": None,
-                "wired_or_battery": None,
-            }
-            _LOGGER.debug(
-                "Created entity for health"
-            )
 
     @property
     def unique_id(self):
@@ -132,61 +123,26 @@ class NestProtectSensor(Entity):
 
     @property
     def name(self):
-        """Return the name of the sensor."""
-        return self.device.device_data[self.device_id]['name'] + \
-               f' {self._sensor_type}'
+        """Return friendly name of the sensor."""
+        return self.device.device_data[self.device_id]['name'] + friendly_names[self._sensor_type]
 
     @property
     def state(self):
         """Return the state of the sensor."""
-        result = None
-
-        if self._sensor_type == 'health':
-            if (self.device.device_data[self.device_id]['component_wifi_test_passed'] and
-                    self.device.device_data[self.device_id]['component_co_test_passed'] and
-                    self.device.device_data[self.device_id]['component_smoke_test_passed'] and
-                    self.device.device_data[self.device_id]['component_speaker_test_passed'] and
-                    self.device.device_data[self.device_id]['component_led_test_passed']):
-                result = 'OK'
-            else:
-                result = 'Test failure'
-        else:
-            result = self.device.device_data[self.device_id][self._sensor_type]
-
-        return result
+        return self.device.device_data[self.device_id][self._sensor_type]
 
     def update(self):
         """Get the latest data from the 'Protect' and updates the states."""
         self.device.update()
 
-        if self._sensor_type == 'health':
-            self._attr_extra_state_attributes = {
-                "component_wifi_test_passed": self.device.device_data[self.device_id]['component_wifi_test_passed'],
-                "component_co_test_passed": self.device.device_data[self.device_id]['component_co_test_passed'],
-                "component_smoke_test_passed": self.device.device_data[self.device_id]['component_smoke_test_passed'],
-                "component_speaker_test_passed": self.device.device_data[self.device_id][
-                    'component_speaker_test_passed'],
-                "component_led_test_passed": self.device.device_data[self.device_id]['component_led_test_passed'],
-                "last_audio_self_test_end_utc_secs": self.device.device_data[self.device_id][
-                    'last_audio_self_test_end_utc_secs'],
-                "device_born_on_date_utc_secs": self.device.device_data[self.device_id]['device_born_on_date_utc_secs'],
-                "replace_by_date_utc_secs": self.device.device_data[self.device_id]['replace_by_date_utc_secs'],
-                "serial_number": self.device.device_data[self.device_id]['serial_number'],
-                "wired_or_battery": self.device.device_data[self.device_id]['wired_or_battery'],
-            }
-            _LOGGER.debug(
-                "Updated extra attributes"
-            )
-
     @property
     def device_class(self):
-        """Return the class of this sensor, from DEVICE_CLASSES."""
-        # https://github.com/home-assistant/core/blob/dev/homeassistant/const.py#L273
+        """Return the class of this sensor, from SensorDeviceClass."""
         value = None
 
-        if self._sensor_type == 'battery_level':
-            value = DEVICE_CLASS_BATTERY
-        if self._sensor_type == 'co_status':
-            value = DEVICE_CLASS_CO
+        if self._sensor_type == SENSOR_BATTERY_LEVEL:
+            value = SensorDeviceClass.BATTERY.value
+        if self._sensor_type == SENSOR_CO_STATUS:
+            value = SensorDeviceClass.CO.value
 
         return value

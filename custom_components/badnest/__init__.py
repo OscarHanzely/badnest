@@ -1,6 +1,7 @@
 """The example integration."""
 import voluptuous as vol
 from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers.discovery import async_load_platform
 
 from .api import NestAPI
 from .const import (
@@ -51,5 +52,8 @@ def setup(hass, config):
     hass.data[DOMAIN] = {
         "api": NestAPI(user_id, access_token, issue_token, cookie, region,),
     }
+
+    hass.async_create_task(async_load_platform(hass, "sensor", DOMAIN, {}, config))
+    hass.async_create_task(async_load_platform(hass, "binary_sensor", DOMAIN, {}, config))
 
     return True

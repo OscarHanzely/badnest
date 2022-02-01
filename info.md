@@ -1,6 +1,13 @@
 # badnest
 
-A bad Nest integration, forked from https://github.com/USA-RedDragon/badnest,  that uses the web api to work after Works with Nest was shut down (bad Google, go sit in your corner and think about what you did)
+A bad Nest integration. This is a second revival of the project for my personal HA instance. My fork is from https://github.com/therealryanbonham/badnest,  that uses the web api. The name comes from the original author.
+
+## What changed in fork ?
+I only own Nest protect, so that's the device that I maintain and refactored. I refactored some sensors and added bunch of binary sensors states like motion detection, house occupancy, health status and included attributes like replacement and manufacturing dates, serial number etc.
+<br><br>
+- - -
+(Original readme follows)
+- - -
 
 ## Why is it bad
 
@@ -8,7 +15,6 @@ This isn't an advertised or public API, it's still better than web scraping, but
 
 ## Features
 
-- Doesn't use the now defunct Works with Nest API
 - Works with migrated/new accounts via Google auth
 - Nest Protect support
 - Nest Thermostat support
@@ -17,7 +23,7 @@ This isn't an advertised or public API, it's still better than web scraping, but
 
 ## Drawbacks
 
-- Nest could change their webapp api at any time, making this defunct (this has happened before, see <https://github.com/USA-RedDragon/badnest/issues/67>)
+- Nest could change their webapp api at any time, making this defunct (this has happened before)
 
 ## Configuration
 
@@ -42,8 +48,6 @@ climate:
 camera:
   - platform: badnest
 
-sensor:
-  - platform: badnest
 ```
 
 Google Login support added with many thanks to: chrisjshull from <https://github.com/chrisjshull/homebridge-nest/>
