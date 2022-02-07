@@ -2,12 +2,7 @@ import logging
 from datetime import datetime
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant import core
-
-try:
-    from homeassistant.components.binary_sensor import BinarySensorEntity
-except:
-    from homeassistant.components.binary_sensor import \
-        BinarySensorDevice as BinarySensorEntity
+from homeassistant.components.binary_sensor import BinarySensorEntity
 
 from .const import (
     DOMAIN,
@@ -108,7 +103,8 @@ class NestProtectBinarySensor(BinarySensorEntity):
             return not self.device.device_data[self.device_id][self._sensor_type]
         if self._sensor_type == 'device':
             return self.device.device_data[self.device_id]['serial_number'] is not None
-        if self._sensor_type == 'health' and self.device.device_data[self.device_id]['component_wifi_test_passed'] is not None:
+        if self._sensor_type == 'health' and self.device.device_data[self.device_id][
+            'component_wifi_test_passed'] is not None:
             # if we received any data from API check the self check results
             tests_passed = (self.device.device_data[self.device_id]['component_wifi_test_passed'] and
                             self.device.device_data[self.device_id]['component_co_test_passed'] and
