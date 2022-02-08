@@ -33,8 +33,6 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 def setup(hass, config):
-    user_id = ''
-    access_token = ''
     """Set up the badnest component."""
     if config.get(DOMAIN) is not None:
         user_id = config[DOMAIN].get(CONF_USER_ID)
@@ -43,8 +41,8 @@ def setup(hass, config):
         cookie = config[DOMAIN].get(CONF_COOKIE)
         region = config[DOMAIN].get(CONF_REGION)
     else:
-        email = None
-        password = None
+        user_id = None
+        access_token = None
         issue_token = None
         cookie = None
         region = None

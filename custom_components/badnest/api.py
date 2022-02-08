@@ -272,6 +272,8 @@ class NestAPI():
                         sensor_data['co_status']
                     self.device_data[sn]['smoke_status'] = \
                         sensor_data['smoke_status']
+                    self.device_data[sn]['heat_status'] = \
+                        sensor_data['heat_status']
                     self.device_data[sn]['battery_health_state'] = \
                         sensor_data['battery_health_state']
                     self.device_data[sn]['battery_level'] = \

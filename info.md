@@ -1,19 +1,11 @@
 # badnest
 
-A bad Nest integration. This is a second revival of the project for my personal HA instance. My fork is from [therealryanbonham](https://github.com/therealryanbonham/badnest), although original project was created and now deleted by [USA-RedDragon](https://github.com/USA-RedDragon). The name comes from the original author.
+A bad Nest integration. This is a second revival of the project for my personal HA instance. My fork is from [therealryanbonham](https://github.com/therealryanbonham/badnest), although original project was created and now deleted by [USA-RedDragon](https://github.com/USA-RedDragon). The name comes from the original author. Another great fork that supports nest protect (does not contain motion sensor capabilities) is the one from [sgowal](https://github.com/sgowal/badnest)
 
 ## What changed in fork ?
 I only own Nest protect, so that's the device that I refactored and maintain atm 
 - added bunch of binary sensors like motion detection, house occupancy, health status
 - included attributes (replacement and manufacturing dates, serial number etc.)
-<br><br>
-- - -
-(Original readme follows)
-- - -
-
-## Why is it bad
-
-This isn't an advertised or public API, it's still better than web scraping, but will never be as reliable as the original API
 
 ## Features
 
@@ -22,10 +14,6 @@ This isn't an advertised or public API, it's still better than web scraping, but
 - Nest Thermostat support
 - Nest Thermostat Sensor support
 - Nest Camera support
-
-## Drawbacks
-
-- Nest could change their webapp api at any time, making this defunct (this has happened before)
 
 ## Install
 The easiest way to install the Badnest integration is with [HACS](https://hacs.xyz/). First install HACS if you don’t have it yet. After installation, you can find this integration in the HACS store under integrations.
@@ -76,3 +64,8 @@ The target temperature reported by the integration sometimes _seems_ to be sligh
 This is caused by the fact that the Nest mobile app actually actually allows users to set the temperature in small
 increments, but the displayed temperature is rounded to the nearest 0.5 degree. In other words, the temperature
 displayed by the integration is correct, just _more exact_ than what is shown in the app.
+
+
+## Acknowledgements
+
+- https://github.com/therealryanbonham/badnest

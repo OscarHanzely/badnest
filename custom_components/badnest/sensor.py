@@ -7,6 +7,7 @@ from .const import (
     DOMAIN,
     SENSOR_CO_STATUS,
     SENSOR_SMOKE_STATUS,
+    SENSOR_HEAT_STATUS,
     SENSOR_BATTERY_HEALTH,
     SENSOR_BATTERY_LEVEL,
     SENSOR_TEMPERATURE,
@@ -22,6 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 PROTECT_SENSOR_TYPES = [
     SENSOR_CO_STATUS,
     SENSOR_SMOKE_STATUS,
+    SENSOR_HEAT_STATUS,
     SENSOR_BATTERY_HEALTH,
     SENSOR_BATTERY_LEVEL,
 ]
@@ -29,6 +31,7 @@ PROTECT_SENSOR_TYPES = [
 friendly_names = {
     SENSOR_CO_STATUS : "CO Level",
     SENSOR_SMOKE_STATUS : "Smoke Level",
+    SENSOR_HEAT_STATUS : "Heat Level",
     SENSOR_BATTERY_HEALTH : "Battery Health",
     SENSOR_BATTERY_LEVEL : "Battery Level",
 }
