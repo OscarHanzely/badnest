@@ -67,6 +67,8 @@ class NestProtectBinarySensor(BinarySensorEntity):
                 "component_speaker_test_passed": None,
                 "component_led_test_passed": None,
                 "last_audio_self_test_end_utc_secs": None,
+                "wifi_ip_address": None,
+                "wifi_mac_address": None,
             }
         if sensor_type == 'device':
             self._attr_extra_state_attributes = {
@@ -155,6 +157,8 @@ class NestProtectBinarySensor(BinarySensorEntity):
                 "replace_by": self.device.device_data[self.device_id]['replace_by_date_utc_secs'],
                 "serial_number": self.device.device_data[self.device_id]['serial_number'],
                 "power_source": power_source,
+                "wifi_ip_address": self.device.device_data[self.device_id]['wifi_ip_address'],
+                "wifi_mac_address": self.device.device_data[self.device_id]['wifi_mac_address'],
             }
 
     @property

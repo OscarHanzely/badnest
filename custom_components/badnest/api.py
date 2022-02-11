@@ -304,6 +304,10 @@ class NestAPI():
                         sensor_data['home_away_input']
                     self.device_data[sn]['wired_or_battery'] = \
                         sensor_data['wired_or_battery']
+                    self.device_data[sn]['wifi_mac_address'] = \
+                        sensor_data['wifi_mac_address']
+                    self.device_data[sn]['wifi_ip_address'] = \
+                        sensor_data['wifi_ip_address']
 
                 # Temperature sensors
                 elif bucket["object_key"].startswith(
